@@ -237,17 +237,87 @@ internal class Program
 
         // 5.4
 
-        var result = dc.Students.GroupBy(s => s.Section_ID)
-           .Where(s => s.Count() > 3)
-           .Select(g => new
-           {
-               Section = g.Key,
-               AVGResult = g.Average(s => s.Year_Result)
-           });
+        //var result = dc.Students.GroupBy(s => s.Section_ID)
+        //   .Where(s => s.Count() > 3)
+        //   .Select(g => new
+        //   {
+        //       Section = g.Key,
+        //       AVGResult = g.Average(s => s.Year_Result)
+        //   });
+
+        //foreach (var s in result)
+        //{
+        //    Console.WriteLine($"{s.Section} : AVG = {s.AVGResult}");
+        //}
+
+        // 5.5
+
+        //var result = dc.Courses
+        //    .Join(dc.Professors,
+        //        c => c.Professor_ID,
+        //        p => p.Professor_ID,
+        //        (c, p) => new { c, p })
+        //    .Join(dc.Sections,
+        //        cp => cp.p.Section_ID,
+        //        s => s.Section_ID,
+        //        (cp, s) => new {
+        //            cp.c.Course_Name,
+        //            s.Section_Name,
+        //            cp.p.Professor_Name
+        //        }).OrderBy(c => c.Course_Name);
+
+
+
+        //foreach (var s in result)
+        //{
+        //    Console.WriteLine($"{s.Course_Name} : {s.Section_Name} : {s.Professor_Name}");
+        //}
+
+        // 5.6
+
+        //var result = dc.Sections
+        //    .Join(dc.Students,
+        //        s => s.Delegate_ID,
+        //        su => su.Student_ID,
+        //        (s, su) => new {
+        //            s.Section_ID,
+        //            s.Section_Name,
+        //            su.Last_Name
+        //        }).OrderByDescending(s => s.Section_ID);
+
+
+
+        //foreach (var s in result)
+        //{
+        //    Console.WriteLine($"{s.Section_ID} : {s.Section_Name} : {s.Last_Name}");
+        //}
+
+        // 5.7
+
+        var result = dc.Sections.Select(s => new
+        {
+            s.Section_ID,
+            s.Section_Name
+        });
+
+
 
         foreach (var s in result)
         {
-            Console.WriteLine($"{s.Section} : AVG = {s.AVGResult}");
+            Console.WriteLine($"{s.Section_ID} - {s.Section_Name}\n");
+
+            var InfoProf = dc.Professors.Where(p => p.Section_ID == s.Section_ID)
+            .Select(p => new
+             {
+                 p.Professor_Name
+             });
+
+            foreach (var p in InfoProf) 
+            {
+                Console.WriteLine($"     - {p.Professor_Name}");
+            }
+
+            Console.WriteLine($"\n");
         }
     }
 }
