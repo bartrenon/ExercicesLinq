@@ -294,30 +294,81 @@ internal class Program
 
         // 5.7
 
-        var result = dc.Sections.Select(s => new
-        {
-            s.Section_ID,
-            s.Section_Name
-        });
+        //var result = dc.Sections.Select(s => new
+        //{
+        //    s.Section_ID,
+        //    s.Section_Name
+        //});
 
 
 
-        foreach (var s in result)
-        {
-            Console.WriteLine($"{s.Section_ID} - {s.Section_Name}\n");
+        //foreach (var s in result)
+        //{
+        //    Console.WriteLine($"{s.Section_ID} - {s.Section_Name}\n");
 
-            var InfoProf = dc.Professors.Where(p => p.Section_ID == s.Section_ID)
-            .Select(p => new
-             {
-                 p.Professor_Name
-             });
+        //    var InfoProf = dc.Professors.Where(p => p.Section_ID == s.Section_ID)
+        //    .Select(p => new
+        //     {
+        //         p.Professor_Name
+        //     });
 
-            foreach (var p in InfoProf) 
-            {
-                Console.WriteLine($"     - {p.Professor_Name}");
-            }
+        //    foreach (var p in InfoProf) 
+        //    {
+        //        Console.WriteLine($"     - {p.Professor_Name}");
+        //    }
 
-            Console.WriteLine($"\n");
-        }
+        //    Console.WriteLine();
+        //}
+
+        // 5.8
+
+        //var result = dc.Sections
+        //    .GroupJoin(dc.Professors,
+        //     s => s.Section_ID,
+        //     p => p.Section_ID,
+        //     (s, p) => new
+        //     {
+        //         s.Section_ID,
+        //         s.Section_Name,
+        //         Processors = p
+        //     }).Where( x => x.Processors.Any());
+
+
+        //foreach (var s in result)
+        //{
+        //    Console.WriteLine($"{s.Section_ID} - {s.Section_Name}\n");
+
+        //    foreach (var p in s.Processors)
+        //    {
+        //        Console.WriteLine($"     - {p.Professor_Name}");
+        //    }
+
+        //    Console.WriteLine();
+        //}
+
+        //5.9
+
+        //var result = dc.Students
+        //.Where(s => s.Year_Result >= 12)
+        //.SelectMany(s => dc.Grades
+        //.Where(g => s.Year_Result >= g.Lower_Bound && s.Year_Result <= g.Upper_Bound),
+        //(s, g) => new
+        //{
+        //    s.Last_Name,
+        //    s.Year_Result,
+        //    Grade = g.GradeName
+        //})
+        //.OrderBy(x => x.Grade);
+
+        //foreach (var s in result)
+        //{
+        //    Console.WriteLine($"{s.Last_Name} - {s.Year_Result} - {s.Grade}");
+        //}
+
+        //5.10
+
+
+
+
     }
 }
