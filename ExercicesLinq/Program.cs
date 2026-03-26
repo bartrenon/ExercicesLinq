@@ -367,7 +367,48 @@ internal class Program
 
         //5.10
 
+        //var result = dc.Professors
+        //    .Join(dc.Sections,
+        //        p => p.Section_ID,
+        //        s => s.Section_ID,
+        //        (p, s) => new { p, s })
+        //    .GroupJoin(dc.Courses,
+        //        ps => ps.p.Professor_ID,
+        //        c => c.Professor_ID,
+        //        (ps, c) => new { ps, c })
+        //        .SelectMany(
+        //         psc => psc.c.DefaultIfEmpty(),
+        //         (psc, x) => new
+        //        {
+        //            psc.ps.p.Professor_Name,
+        //            psc.ps.s.Section_Name,
+        //            x?.Course_Name,
+        //            x?.Course_Ects 
+        //        }).OrderByDescending(p => p.Course_Ects).ThenBy(p => p.Professor_Name);
 
+
+
+        //foreach (var s in result)
+        //{
+        //    Console.WriteLine($"{s.Professor_Name} : {s.Section_Name} : {s.Course_Name} : {s.Course_Ects}");
+        //}
+
+        //5.11
+        var result = dc.Professors
+            .GroupJoin(dc.Courses,
+             p => p.Professor_ID,
+             c => c.Professor_ID,
+             (p, c) => new
+             {
+                 p.Professor_ID,
+                 ECTSTOT = c.Sum(c => c.Course_Ects)
+             }).OrderByDescending(p => p.ECTSTOT);
+
+
+        foreach (var s in result)
+        {
+           Console.WriteLine($"{s.Professor_ID} : {s.ECTSTOT}");
+        }
 
 
     }
